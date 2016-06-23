@@ -29,11 +29,11 @@ public class ACBALL {
 					result[i] = a[i];
 				}
 				if ( a[i] != b[i]) {
-					result[i] = a[i];
+					result[i] = black;
 				}
 			}
 			System.out.print(result);
-			System.out.println();
+			System.out.print(' ');
 			tests--;
 		}
 	}
