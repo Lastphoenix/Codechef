@@ -19,22 +19,36 @@ public class ACBALL {
 			String x = br.readLine();
 			String y = br.readLine();
 
-			calculateHammingDistance(x,white,black);
-			calculateHammingDistance(y,white,black);
+			char[] a = calculateHammingDistance(x,white,black);
+			char[] b = calculateHammingDistance(y,white,black);
 			
+			char[] result = new char[x.length()];
+			
+			for (int i = 0; i < x.length(); i++) {
+				if (a[i] == b[i]) {
+					result[i] = a[i];
+				}
+				if ( a[i] != b[i]) {
+					result[i] = a[i];
+				}
+			}
+			System.out.print(result);
 			tests--;
 		}
 	}
 
-	private static void calculateHammingDistance(String x, char white, char black) {
+	private static char[] calculateHammingDistance(String x, char white, char black) {
 		
-		for (int i = 0; i < x.length();i++) {
+		char[] abc = new char[x.length()];
+		
+		for (int i = 0; i < x.length(); i++) {
 			if (x.charAt(i) == white) {
-				System.out.print(black);
+				abc[i] = black;
 			}
 			if (x.charAt(i) == black) {
-				System.out.print(white);
+				abc[i] = white;
 			}
 		}
+		return abc;
 	}
 }
