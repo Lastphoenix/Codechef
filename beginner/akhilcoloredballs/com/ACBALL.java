@@ -33,6 +33,7 @@ public class ACBALL {
 				}
 			}
 			System.out.print(result);
+			System.out.println();
 			tests--;
 		}
 	}
