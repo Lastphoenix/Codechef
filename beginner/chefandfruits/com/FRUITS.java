@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 //https://www.codechef.com/problems/FRUITS
 
-public class FRUIT {
+public class FRUITS {
 
 	public static void main(String[] args) {
 
