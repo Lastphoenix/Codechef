@@ -11,40 +11,54 @@ public class PRIMES2 {
 
 		while (true) {
 
-			int oddNumber = Integer.parseInt(br.readLine());
-
+			int oddNumber = Integer.parseInt(br.readLine().trim());
 			if (oddNumber == 0) {
 				break;
 			}
+			
+			int flag = 0;
 
-			int[] res = solve(oddNumber);
-			System.out.println(res[0] + " " + res[1] + " " + res[2]);
+			int p1 = 0;
+			int p2 = 0;
+			int p3 = 0;
+
+			for (p3 = 100; p3 > 1; p3--) {
+				if (p3 * p3 * p3 < oddNumber && isPrime(p3)) {
+					for (p2 = 2; p2 * p2 + p3 * p3 * p3 < oddNumber; p2++) {
+						p1 = oddNumber - (p3 * p3 * p3) - (p2 * p2);
+						if (isPrime(p2) && isPrime(p1)) {
+							flag = 1;
+							break;
+						}
+					}
+					if (flag == 1)
+						break;
+				}
+
+			}
+			if (flag == 1)
+				System.out.println(p1 + " " + p2 + " " + p3);
+			else
+				System.out.println("0 0 0");
 		}
 	}
-	
-	public static int[] solve(int n) {
-		
-        for(int p3 = 100; p3 > 1; p3--) {
-        	
-            if(p3 * p3 * p3 > n && !isPrime(p3)) continue;
-            for(int p2 = 2; p2 * p2 + p3 * p3 * p3 < n; p2++) {
-            	
-                int p1 = n - p2 * p2 - p3 * p3 * p3;
-                if(isPrime(p2) && isPrime(p1)) {
-                    return new int[]{p1, p2, p3};
-                }
-            }
-        }
-        return new int[]{0, 0, 0};
-    }
 
 	public static boolean isPrime(int n) {
 
-		for (int number = 2; number < Math.sqrt(n); number++) {
-            if (n % number == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+		if (n == 2 || n == 3) {
+			return true;
+		}
+		if (n % 2 == 0 || n == 1) {
+			return false;
+		}
+
+		int sqrt = (int) Math.sqrt(n) + 1;
+
+		for (int i = 3; i < sqrt; i += 2) {
+			if (n % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
