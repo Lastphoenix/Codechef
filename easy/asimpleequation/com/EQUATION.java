@@ -5,41 +5,30 @@ import java.io.*;
 public class EQUATION {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int testCases = Integer.parseInt(br.readLine());
-		
+
 		while (testCases > 0) {
-			
-			int[] numbers = arrayNumbers(br);
-			int N = numbers[0];
-			int A = numbers[1];
-			int B = numbers[2];
-			int C = numbers[3];
-			int count = 0;
-			
+
+			String[] numbers = br.readLine().split(" ");
+			int N = Integer.parseInt(numbers[0]);
+			int A = Integer.parseInt(numbers[1]);
+			int B = Integer.parseInt(numbers[2]);
+			int C = Integer.parseInt(numbers[3]);
+			long count = 0;
+
 			for (int a = 0; a <= A; a++) {
-				for (int b = 0; b <= B; b++) {
-					for (int c = 0; c <= C; c++) {
-						if (a + b + c <= N) 
-							count++;
-						
-					}
+				for (int b = 0; B > (N - a) ? b <= (N - a) : b <= B; b++) {
+					int temp = N - a - b;
+					if(C > temp)
+						count += (temp + 1);
+					else
+						count += (C + 1);
 				}
 			}
 			System.out.println(count);
 			testCases--;
 		}
-	}
-	
-	public static int[] arrayNumbers(BufferedReader br) throws Exception {
-		
-		String[] line = br.readLine().split(" ");
-		int[] x = new int[4];
-		
-		for(int i = 0; i < 4; i++) {
-			x[i] = Integer.parseInt(line[i]);
-		}
-		return x;
 	}
 }
