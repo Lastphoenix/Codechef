@@ -1,20 +1,18 @@
-package cleanigup.com;
+package cleaningup.com;
 
-import java.io.*;
 import java.util.*;
 
 public class CLEANUP {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int t = Integer.parseInt(br.readLine());
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
 
 		while (t > 0) {
 
-			String[] lists = br.readLine().split(" ");
-			int n = Integer.parseInt(lists[0]);
-			int m = Integer.parseInt(lists[1]);
+			int n = sc.nextInt();
+			int m = sc.nextInt();
 			Integer begin = 1;
 			Integer[] listN = new Integer[n];
 
@@ -23,16 +21,16 @@ public class CLEANUP {
 				begin++;
 			}
 
-			String[] s = br.readLine().split(" ");
 			Integer[] listM = new Integer[m];
 
 			for (int i = 0; i < m; i++) {
-				listM[i] = Integer.parseInt(s[i]);
+				listM[i] = sc.nextInt();
 			}
 
 			jobs(listM, listN);
 			t--;
 		}
+		sc.close();
 	}
 
 	private static void jobs(Integer[] listM, Integer[] listN) {
@@ -40,6 +38,7 @@ public class CLEANUP {
 		int temp = 2;
 		Set<Integer> chef = new HashSet<Integer>();
 		Set<Integer> assistant = new HashSet<Integer>();
+		
 		for (int j = 0; j < listN.length; j++) {
 			if (!Arrays.asList(listM).contains(listN[j])) {
 				if (temp % 2 == 0) {
@@ -58,9 +57,11 @@ public class CLEANUP {
 	private static String builder(Set<Integer> x) {
 
 		StringBuilder builder = new StringBuilder();
+		
 		for (Integer value : x) {
 			builder.append(value + " ");
 		}
+		
 		String text = builder.toString();
 		String result = text.replaceAll("\\s+$", "");
 		return result;
