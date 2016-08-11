@@ -7,63 +7,40 @@ public class CLEANUP {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		int t = sc.nextInt();
-
-		while (t > 0) {
-
-			int n = sc.nextInt();
+		int T = sc.nextInt();
+		StringBuilder s = new StringBuilder("");
+		
+		while(T-- > 0){
+			
 			int m = sc.nextInt();
-			Integer begin = 1;
-			Integer[] listN = new Integer[n];
-
-			for (int j = 0; j < n; j++) {
-				listN[j] = begin;
-				begin++;
+			int n = sc.nextInt();
+			
+			boolean[] jobs = new boolean[m + 1];
+			for(int i = 1; i <= n; i++){
+				int t = sc.nextInt();
+				jobs[t] = true;
 			}
-
-			Integer[] listM = new Integer[m];
-
-			for (int i = 0; i < m; i++) {
-				listM[i] = sc.nextInt();
-			}
-
-			jobs(listM, listN);
-			t--;
-		}
-		sc.close();
-	}
-
-	private static void jobs(Integer[] listM, Integer[] listN) {
-
-		int temp = 2;
-		Set<Integer> chef = new HashSet<Integer>();
-		Set<Integer> assistant = new HashSet<Integer>();
-		
-		for (int j = 0; j < listN.length; j++) {
-			if (!Arrays.asList(listM).contains(listN[j])) {
-				if (temp % 2 == 0) {
-					chef.add(listN[j]);
-				} else {
-					assistant.add(listN[j]);
+			
+			StringBuilder chef = new StringBuilder("");
+			StringBuilder assistant = new StringBuilder("");
+			
+			int temp = 0 ;
+			for(int i = 1; i <= m; i++){
+				if(!jobs[i]){
+					if(temp == 0){
+						chef.append(i).append(" ");
+						temp = 1;
+					}else{
+						assistant.append(i).append(" ");
+						temp = 0;
+					}
 				}
-				temp++;
 			}
+			chef.append("\n");
+			assistant.append("\n");
+			s.append(chef).append(assistant);
 		}
-
-		System.out.println(builder(chef));
-		System.out.println(builder(assistant));
-	}
-
-	private static String builder(Set<Integer> x) {
-
-		StringBuilder builder = new StringBuilder();
-		
-		for (Integer value : x) {
-			builder.append(value + " ");
-		}
-		
-		String text = builder.toString();
-		String result = text.replaceAll("\\s+$", "");
-		return result;
+		System.out.print(s);
+		sc.close();
 	}
 }
