@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="beginner"/>
 	<classpathentry kind="src" path="easy"/>
 	<classpathentry kind="src" path="medium"/>
+	<classpathentry kind="src" path="hard"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
