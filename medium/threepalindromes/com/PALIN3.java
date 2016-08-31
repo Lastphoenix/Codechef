@@ -2,65 +2,106 @@ package threepalindromes.com;
 
 import java.io.*;
 
-public class PALIN3 {
+class PALIN3 {
+
+	private int[] p;
+	private String s;
+	private char[] t;
+
+	public PALIN3(String s) {
+
+		this.s = s;
+		preprocess();
+		p = new int[t.length];
+
+		int center = 0, right = 0;
+		for (int i = 1; i < t.length - 1; i++) {
+			int mirror = 2 * center - i;
+
+			if (right > i)
+				p[i] = Math.min(right - i, p[mirror]);
+
+			while (t[i + (1 + p[i])] == t[i - (1 + p[i])])
+				p[i]++;
+
+			if (i + p[i] > right) {
+				center = i;
+				right = i + p[i];
+			}
+		}
+	}
+
+	private void preprocess() {
+
+		t = new char[s.length() * 2 + 3];
+		t[0] = '$';
+		t[s.length() * 2 + 2] = '@';
+
+		for (int i = 0; i < s.length(); i++) {
+			t[2 * i + 1] = '#';
+			t[2 * i + 2] = s.charAt(i);
+		}
+
+		t[s.length() * 2 + 1] = '#';
+	}
+
+	public String longestPalindromicSubstring() {
+
+		int length = 0;
+		int center = 0;
+
+		for (int i = 1; i < p.length - 1; i++) {
+			if (p[i] > length) {
+				length = p[i];
+				center = i;
+			}
+		}
+		return s.substring((center - 1 - length) / 2, (center - 1 + length) / 2);
+	}
+
+	public String longestPalindromicSubstring(int i) {
+
+		int length = p[i + 2];
+		int center = i + 2;
+
+		return s.substring((center - 1 - length) / 2, (center - 1 + length) / 2);
+	}
+
+	public static boolean trailingZeros(String string) {
+
+		int x = string.length();
+
+		if (x == 1) {
+			return true;
+		}
+		if (x > 1) {
+			if (string.charAt(0) == '0') {
+				return false;
+			}
+			for (int i = 1; i < x; i++) {
+				if (string.charAt(i) == '0' && string.charAt(i - 1) == '0')
+					return false;
+			}
+		}
+		return true;
+	}
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String S = br.readLine();
-		System.out.println(countPalin(S));
-	}
+		String s = br.readLine();
+		PALIN3 manacher = new PALIN3(s);
+		int count = 0;
 
-	private static int countPalin(String S) {
-
-		int answer = 0;
-		int len = S.length() + 1;
-
-		for (int i = 1; i < len; i++) {
-			for (int j = i; j < len; j++) {
-				String temp = S.substring(i, j);
-				if (checkPalin(temp) && divisibleThree(temp) && !trailingzeros(temp)) {
-					answer++;
+		for (int i = 0; i < 2 * s.length(); i++) {
+			int x = manacher.longestPalindromicSubstring(i).length();
+			if (x > 0) {
+				int result = Integer.parseInt(manacher.longestPalindromicSubstring(i));
+				if (result % 3 == 0 && trailingZeros(manacher.longestPalindromicSubstring(i))) {
+					count++;
 				}
 			}
 		}
-		return answer;
-	}
-
-	private static boolean trailingzeros(String temp) {
-
-		if (temp.length() == 1) {
-			return false;
-		}
-		
-		int a = Character.getNumericValue(temp.charAt(0));
-		int b = Character.getNumericValue(temp.charAt(1));
-		
-		if (a == 0 && b == 0) {
-			return true;
-		}
-		return false;
-	}
-
-	private static boolean divisibleThree(String temp) {
-
-		int x = 0;
-
-		for (int i = 0; i < temp.length(); i++) {
-			x = x + Character.getNumericValue(temp.charAt(i));
-			if (x % 3 == 0) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean checkPalin(String S) {
-
-		String reverse = new StringBuilder(S).reverse().toString();
-		if (S.equals(reverse)) {
-			return true;
-		}
-		return false;
+		System.out.println(count);
 	}
 }
