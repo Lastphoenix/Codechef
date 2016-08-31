@@ -1,6 +1,7 @@
 package threepalindromes.com;
 
-import java.io.*;
+import java.math.BigInteger;
+import java.util.Scanner;
 
 class PALIN3 {
 
@@ -45,20 +46,6 @@ class PALIN3 {
 		t[s.length() * 2 + 1] = '#';
 	}
 
-	public String longestPalindromicSubstring() {
-
-		int length = 0;
-		int center = 0;
-
-		for (int i = 1; i < p.length - 1; i++) {
-			if (p[i] > length) {
-				length = p[i];
-				center = i;
-			}
-		}
-		return s.substring((center - 1 - length) / 2, (center - 1 + length) / 2);
-	}
-
 	public String longestPalindromicSubstring(int i) {
 
 		int length = p[i + 2];
@@ -75,33 +62,39 @@ class PALIN3 {
 			return true;
 		}
 		if (x > 1) {
-			if (string.charAt(0) == '0') {
+			if (string.charAt(0) == 0) {
 				return false;
 			}
-			for (int i = 1; i < x; i++) {
-				if (string.charAt(i) == '0' && string.charAt(i - 1) == '0')
-					return false;
+			if (string.charAt(0) == 0 && string.charAt(1) == 0) {
+				return false;
+			} else {
+				return true;
 			}
 		}
 		return true;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String s = br.readLine();
+		Scanner sc = new Scanner(System.in);
+
+		String input = sc.nextLine();
+		String s = input.replaceAll("\\s+","");
 		PALIN3 manacher = new PALIN3(s);
 		int count = 0;
 
 		for (int i = 0; i < 2 * s.length(); i++) {
-			int x = manacher.longestPalindromicSubstring(i).length();
+			long x = manacher.longestPalindromicSubstring(i).length();
 			if (x > 0) {
-				int result = Integer.parseInt(manacher.longestPalindromicSubstring(i));
-				if (result % 3 == 0 && trailingZeros(manacher.longestPalindromicSubstring(i))) {
+				BigInteger result = new BigInteger(manacher.longestPalindromicSubstring(i));
+				BigInteger division = new BigInteger("3");
+				BigInteger remainder = result.remainder(division);
+				if (remainder == BigInteger.ZERO && trailingZeros(manacher.longestPalindromicSubstring(i))) {
 					count++;
 				}
 			}
 		}
 		System.out.println(count);
+		sc.close();
 	}
 }
